@@ -27,6 +27,7 @@ func (p *Playwright) Launch(args []string) {
 		log.Fatalf("could not start playwright: %v", err)
 	}
 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
+		Headless: playwright.Bool(false),
 		Args: args,
 	})
 	if err != nil {
@@ -46,7 +47,7 @@ func (p *Playwright) NewPage(){
 }
 
 // Closes browser instance and stops puppeteer client
-func  (p *Playwright) Kill() {
+func (p *Playwright) Kill() {
 	if err := p.Browser.Close(); err != nil {
 		log.Fatalf("could not close browser: %v", err)
 	}
