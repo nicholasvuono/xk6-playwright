@@ -1,6 +1,6 @@
 > #### ⚠️ This is currently an alpha version
 >
-> This is not supported by the k6 team, and is worked on by an individual contributor(s).
+> This is not supported by the k6 team, and is worked on by a(n) individual contributor(s).
 > It may also break in the future as both xk6 and playwright-go evolve.
 > Any issues with the tool should be raised [here](https://github.com/nicholasvuono/xk6-playwright/issues).
 >
