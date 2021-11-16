@@ -15,7 +15,7 @@
    <p>Here's to open source!</p>
 
    <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.1.1-blue"></a>
-   <a href="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright" alt="Go Report Card"></a>
+   <a href="https://goreportcard.com/report/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright" alt="Go Report Card"></a>
    <a href="https://github.com/wosp-io/xk6-playwright/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/wosp-io/xk6-playwright?color=red"></a>
 </div>
 
