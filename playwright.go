@@ -67,6 +67,16 @@ func (p *Playwright) Goto(url string, opts playwright.PageGotoOptions) {
 }
 func (p *Playwright) WaitForSelector(selector string, opts playwright.PageWaitForSelectorOptions) {
 	if _, err := p.Page.WaitForSelector(selector, opts); err != nil {
-		log.Fatalf("could not goto: %v", err)
+		log.Fatalf("error with waiting for the selector: %v", err)
+	}
+}
+func (p *Playwright) Click(selector string, opts playwright.PageClickOptions) {
+	if err := p.Page.Click(selector, opts); err != nil {
+		log.Fatalf("error with clicking: %v", err)
+	}
+}
+func (p *Playwright) Type(selector string, typedString string, opts playwright.PageTypeOptions) {
+	if err := p.Page.Type(selector, typedString, opts); err != nil {
+		log.Fatalf("error with typing: %v", err)
 	}
 }
