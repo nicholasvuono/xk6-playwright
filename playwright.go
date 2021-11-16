@@ -37,7 +37,7 @@ func (p *Playwright) Launch(args []string) {
 	p.Browser = browser
 }
 
-//NewPagepens a new page within the browser
+//NewPage opens a new page within the browser
 func (p *Playwright) NewPage() {
 	page, err := p.Browser.NewPage()
 	if err != nil {
