@@ -34,7 +34,7 @@ To build a `k6` binary with this extension, first ensure you have the prerequisi
 
 - [Go toolchain](https://go101.org/article/go-toolchain.html)
 - Git
-- Clone the k6 repository (Note: make sure you are in the k6 repo base directory before attempting the below steps)
+- Clone the k6 repository (NOTE: make sure you are in the k6 repo base directory before attempting the below steps)
 
 Then:
 
