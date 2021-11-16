@@ -15,11 +15,9 @@
    <p>Here's to open source!</p>
 
    <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.1.1-blue"></a>
-   <a href="https://goreportcard.com/report/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright" alt="Go Report Card"></a>
+   <a href="https://goreportcard.com/report/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright?dummy=unused" alt="Go Report Card"></a>
    <a href="https://github.com/wosp-io/xk6-playwright/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/wosp-io/xk6-playwright?color=red"></a>
 </div>
-
-
 
 ----
 This project was inspired by <a href="https://github.com/grafana/xk6-browser" target="_blank">xk6-browser</a>. Having seen the release we were excited to play around with the tool, but while using it we ran into some issues around context, page navigation, typing and button clicks. Having previously worked with <a href="https://github.com/mxschmitt/playwright-go" target="_blank">playwright-go</a> we thought it would be a great idea to create an extension around this so we had something we know would work to our liking. Thus <a href="https://github.com/wosp-io/xk6-playwright" target="_blank">xk6 playwright</a> was born!
