@@ -13,7 +13,7 @@ var tests = []func(t *testing.T){
 
 func TestPlaywright(t *testing.T) {
 	var pw Playwright
-	var opts [] string
+	var opts []string
 	var opts2 playwright.PageGotoOptions
 	var opts3 playwright.PageWaitForSelectorOptions
 
