@@ -87,3 +87,10 @@ func (p *Playwright) Type(selector string, typedString string, opts playwright.P
 		log.Fatalf("error with typing: %v", err)
 	}
 }
+
+//PressKey wrapper around playwright Press page function that takes in a selector, key, and a set of options
+func (p *Playwright) PressKey(selector string, key string, opts playwright.PagePressOptions) {
+	if err := p.Page.Press(selector, key, opts); err != nil {
+		log.Fatalf("error with pressing the key: %v", err)
+	}
+}

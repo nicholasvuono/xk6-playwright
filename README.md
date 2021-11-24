@@ -46,7 +46,7 @@ Then:
   xk6 build --output xk6-playwright --with github.com/wosp-io/xk6-playwright
   ```
 
-  This will create a `xk6-playwright` binary file in the current working directory. This file can be used exactly the same as the main `k6` binary, with the addition of being able to run xk6-browser scripts.
+  This will create a `xk6-playwright` binary file in the current working directory. This file can be used exactly the same as the main `k6` binary, with the addition of being able to run xk6-playwright scripts.
 
 3. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
 
