@@ -121,3 +121,10 @@ func (p *Playwright) Focus(selector string, opts playwright.PageFocusOptions) {
 		log.Fatalf("error focusing on the element: %v", err)
 	}
 }
+
+//Fill wrapper around playwright fill page function that takes in a selector, text, and a set of options
+func (p *Playwright) Fill(selector string, filledString string, opts playwright.FrameFillOptions) {
+	if err := p.Page.Fill(selector, filledString, opts); err != nil {
+		log.Fatalf("error with fill: %v", err)
+	}
+}
