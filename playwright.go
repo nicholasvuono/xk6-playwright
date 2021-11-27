@@ -128,3 +128,10 @@ func (p *Playwright) Fill(selector string, filledString string, opts playwright.
 		log.Fatalf("error with fill: %v", err)
 	}
 }
+
+//DragAndDrop wrapper around playwright draganddrop page function that takes in two selectors(source and target) and a set of options
+func (p *Playwright) DragAndDrop(sourceSelector string, targetSelector string, opts playwright.FrameDragAndDropOptions) {
+	if err := p.Page.DragAndDrop(sourceSelector, targetSelector, opts); err != nil {
+		log.Fatalf("error with drag and drop: %v", err)
+	}
+}
