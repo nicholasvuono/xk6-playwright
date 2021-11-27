@@ -1,7 +1,10 @@
 package playwright
 
 import (
+	"io/fs"
+	"io/ioutil"
 	"log"
+	"time"
 
 	"github.com/mxschmitt/playwright-go"
 	"go.k6.io/k6/js/modules"
@@ -98,4 +101,16 @@ func (p *Playwright) PressKey(selector string, key string, opts playwright.PageP
 //Sleep wrapper around playwright waitForTimeout page function that sleeps for the given `timeout` in milliseconds
 func (p *Playwright) Sleep(time float64) {
 	p.Page.WaitForTimeout(time)
+}
+
+//Screenshot wrapper around playwright screenshot page function that attempts to take and save a png image of the current screen.
+func (p *Playwright) Screenshot(filename string, perm fs.FileMode, opts playwright.PageScreenshotOptions) {
+	image, err := p.Page.Screenshot(opts)
+	if err != nil {
+		log.Fatalf("error with taking a screenshot: %v", err)
+	}
+	err = ioutil.WriteFile("Screenshot_" + time.Now().Format("2017-09-07 17:06:06") + ".png", image, perm)
+	if err != nil {
+		log.Fatalf("error with writing the screenshot to the file system: %v", err)
+	}
 }
