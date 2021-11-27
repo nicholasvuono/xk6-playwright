@@ -114,3 +114,10 @@ func (p *Playwright) Screenshot(filename string, perm fs.FileMode, opts playwrig
 		log.Fatalf("error with writing the screenshot to the file system: %v", err)
 	}
 }
+
+//Focus wrapper around playwright focus page function that takes in a selector and a set of options
+func (p *Playwright) Focus(selector string, opts playwright.PageFocusOptions) {
+	if err := p.Page.Focus(selector); err != nil {
+		log.Fatalf("error focusing on the element: %v", err)
+	}
+}
