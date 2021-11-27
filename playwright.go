@@ -94,3 +94,8 @@ func (p *Playwright) PressKey(selector string, key string, opts playwright.PageP
 		log.Fatalf("error with pressing the key: %v", err)
 	}
 }
+
+//Sleep wrapper around playwright waitForTimeout page function that sleeps for the given `timeout` in milliseconds
+func (p *Playwright) Sleep(time float64) {
+	p.Page.WaitForTimeout(time)
+}
