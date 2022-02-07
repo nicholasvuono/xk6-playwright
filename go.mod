@@ -1,4 +1,4 @@
-module github.com/nicholasvuono/xk6-playwright
+module github.com/wosp-io/xk6-playwright
 
 go 1.17
 
