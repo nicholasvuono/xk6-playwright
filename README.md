@@ -86,6 +86,7 @@ export default function () {
 | focus() | [`Focus()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Focus) | focuses a spcific element based on the provided selector |
 | fill() | [`Fill()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Fill) | fills an 'input' element on the page based on the provided selector and string to be entered |
 | dragAndDrop() | [`DragAndDrop()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.DragAndDrop) | drag an item from one place to another based on two selectors |
+| evaluate() | [`Evaluate()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Evaluate) | evaluate an expresion or function and get the return value |
 
 
 NOTE: the above 'Encompassed Playwright Function(s)' will link to the [playwright-go package documentation](https://pkg.go.dev/github.com/mxschmitt/playwright-go#section-readme) to give an in-depth overview of how these functions will behave from a low-level perspective.

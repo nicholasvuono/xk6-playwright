@@ -135,3 +135,12 @@ func (p *Playwright) DragAndDrop(sourceSelector string, targetSelector string, o
 		log.Fatalf("error with drag and drop: %v", err)
 	}
 }
+
+//Evaluate wrapper around playwright evaluate page function that takes in an expresion and a set of options and evaluates the expression/function returning the resulting information.
+func (p *Playwright) Evaluate(expression string, opts playwright.PageEvaluateOptions) interface{} {
+	returnedValue, err := p.Page.Evaluate(expression, opts);
+	if err != nil {
+		log.Fatalf("error evaluating the expression: %v", err)
+	}
+	return returnedValue;
+}
