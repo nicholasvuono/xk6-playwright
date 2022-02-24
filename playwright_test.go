@@ -31,7 +31,7 @@ func TestPlaywrightCustomBrowser(t *testing.T) {
 	var opts2 playwright.PageGotoOptions
 	var opts3 playwright.PageWaitForSelectorOptions
 
-	pw.LaunchCustomBrowser(opts, "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe")
+	pw.LaunchCustomBrowser(opts, "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", "")
 	pw.NewPage()
 	pw.Goto("https://www.google.com", opts2)
 	pw.WaitForSelector("//html/body/div[1]/div[2]", opts3)

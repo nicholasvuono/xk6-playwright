@@ -30,7 +30,6 @@ func (p *Playwright) Launch(args []string) {
 		log.Fatalf("could not start playwright: %v", err)
 	}
 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
-		Headless: playwright.Bool(false),
 		Args:     args,
 	})
 	if err != nil {
@@ -40,9 +39,9 @@ func (p *Playwright) Launch(args []string) {
 	p.Browser = browser
 }
 
-func (p *Playwright) LaunchCustomBrowser(args []string, browserPath string) {
+func (p *Playwright) LaunchCustomBrowser(args []string, browserPath string, driver string) {
 	runOptions := playwright.RunOptions{
-		DriverDirectory: "./",
+		DriverDirectory: driver,
 		SkipInstallBrowsers: true,
 		Browsers: []string {browserPath},
 	}
@@ -51,8 +50,8 @@ func (p *Playwright) LaunchCustomBrowser(args []string, browserPath string) {
 		log.Fatalf("could not start playwright: %v", err)
 	}
 	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
-		Headless: playwright.Bool(false),
 		Args:     args,
+		ExecutablePath: &browserPath,
 	})
 	if err != nil {
 		log.Fatalf("could not launch browser: %v", err)
