@@ -24,35 +24,12 @@ type Playwright struct {
 }
 
 //Launch starts the playwright client and launches a browser
-func (p *Playwright) Launch(args []string) {
+func (p *Playwright) Launch(args playwright.BrowserTypeLaunchOptions) {
 	pw, err := playwright.Run()
 	if err != nil {
 		log.Fatalf("could not start playwright: %v", err)
 	}
-	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
-		Args:     args,
-	})
-	if err != nil {
-		log.Fatalf("could not launch browser: %v", err)
-	}
-	p.Self = pw
-	p.Browser = browser
-}
-
-func (p *Playwright) LaunchCustomBrowser(args []string, browserPath string, driver string) {
-	runOptions := playwright.RunOptions{
-		DriverDirectory: driver,
-		SkipInstallBrowsers: true,
-		Browsers: []string {browserPath},
-	}
-	pw, err := playwright.Run(&runOptions)
-	if err != nil {
-		log.Fatalf("could not start playwright: %v", err)
-	}
-	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
-		Args:     args,
-		ExecutablePath: &browserPath,
-	})
+	browser, err := pw.Chromium.Launch(args)
 	if err != nil {
 		log.Fatalf("could not launch browser: %v", err)
 	}
@@ -163,4 +140,10 @@ func (p *Playwright) Evaluate(expression string, opts playwright.PageEvaluateOpt
 		log.Fatalf("error evaluating the expression: %v", err)
 	}
 	return returnedValue;
+}
+
+func (p *Playwright) Reload() {
+	if _, err :=  p.Page.Reload(); err != nil {
+		log.Fatalf("error with reloading the page: %v", err)
+	}
 }
