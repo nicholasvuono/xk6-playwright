@@ -4,7 +4,7 @@
 > It may also break in the future as both xk6 and playwright-go evolve.
 > Any issues with the tool should be raised [here](https://github.com/nicholasvuono/xk6-playwright/issues).
 >
->It is not production ready yet, but definitely works as intended! Please enjoy the tool! 
+>It is not production ready yet, but definitely works as intended! Please enjoy the tool!
 
 <br><br>
 <div align="center">
@@ -14,7 +14,7 @@
    <p>Special thanks to all the contributors over at <a href="https://github.com/grafana/k6/graphs/contributors" target="_blank">k6</a> and <a href="https://github.com/mxschmitt/playwright-go/graphs/contributors" target="_blank">playwright-go</a>
    <p>Here's to open source!</p>
 
-   <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.2.3-blue"></a>
+   <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.2.4-blue"></a>
    <a href="https://goreportcard.com/report/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright?dummy=unused" alt="Go Report Card"></a>
    <a href="https://github.com/wosp-io/xk6-playwright/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/wosp-io/xk6-playwright?color=red"></a>
 </div>
@@ -61,7 +61,31 @@ export default function () {
   pw.launch()
   pw.newPage()
   pw.goto("https://www.google.com/", {waitUntil: 'networkidle'})
-  pw.waitForSelector("//html/body/div[1]/div[2]", {state: 'visible'})
+  pw.waitForSelector("input[title='Search']", {state: 'visible'})
+  pw.kill()
+}
+```
+
+</br>
+
+## Monitor Real User Metrics
+
+```JavaScript
+import pw from 'k6/x/playwright';
+
+export default function () {
+  pw.launch()
+  pw.newPage()
+  pw.goto("https://www.google.com/")
+  pw.waitForSelector("input[title='Search']", {state: 'visible'})
+  pw.type("input[title='Search']", "how to measure real user metrics with the xk6-playwright extension for k6?")
+
+  //print out real user metrics of the google serach page
+  console.log(`First Paint: ${pw.firstPaint()}ms`)
+	console.log(`First Contentful Paint: ${pw.firstContentfulPaint()}ms`)
+	console.log(`Time to Minimally Interactive: ${pw.timeToMinimallyInteractive()}ms`)
+	console.log(`First Input Delay: ${pw.firstInputDelay()}ms`)
+
   pw.kill()
 }
 ```
@@ -88,6 +112,10 @@ export default function () {
 | dragAndDrop() | [`DragAndDrop()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.DragAndDrop) | drag an item from one place to another based on two selectors |
 | evaluate() | [`Evaluate()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Evaluate) | evaluate an expresion or function and get the return value |
 | reload() | [`Reload()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Reload) | reloads the current page |
+| firstPaint() | N/A this function is unique to xk6-playwright [`What is First Paint?`](https://developer.mozilla.org/en-US/docs/Glossary/First_paint) | captures the first paint metric of the current page milliseconds |
+| firstContentfulPaint() | N/A this function is unique to xk6-playwright [`What is First Contentful Paint?`](https://web.dev/fcp/) | captures the first contentful paint metric of the current page milliseconds |
+| timeToMinimallyInteractive() | N/A this function is unique to xk6-playwright - This is based on the first input registerd on the current page - NOTE: this is how we personally like to determine when a page is minimally interactive. | captures the time to minimally interactive metric of the current page milliseconds |
+| firstInputDelay() | N/A this function is unique to xk6-playwright [`What is First Input Delay?`](https://web.dev/fid/) | captures the first input delay metric of the current page in milliseconds |
 
 
 NOTE: the above 'Encompassed Playwright Function(s)' will link to the [playwright-go package documentation](https://pkg.go.dev/github.com/mxschmitt/playwright-go#section-readme) to give an in-depth overview of how these functions will behave from a low-level perspective.

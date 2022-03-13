@@ -1,6 +1,7 @@
 package playwright
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 
@@ -9,6 +10,7 @@ import (
 
 var tests = []func(t *testing.T){
 	TestPlaywright,
+	TestPlaywright2,
 }
 
 func TestPlaywright(t *testing.T) {
@@ -23,7 +25,33 @@ func TestPlaywright(t *testing.T) {
 	pw.Launch(opts)
 	pw.NewPage()
 	pw.Goto("https://www.google.com", opts2)
-	pw.WaitForSelector("//html/body/div[1]/div[2]", opts3)
+	pw.WaitForSelector("input[title='Search']", opts3)
+	pw.Kill()
+}
+
+func TestPlaywright2(t *testing.T) {
+	var pw Playwright
+	headless := true
+	opts := playwright.BrowserTypeLaunchOptions {
+		Headless: &headless,
+	}
+	var opts2 playwright.PageGotoOptions
+	var opts3 playwright.PageWaitForSelectorOptions
+	var opts4 playwright.PageTypeOptions
+
+	pw.Launch(opts)
+	pw.NewPage()
+	pw.Goto("https://www.google.com", opts2)
+	pw.WaitForSelector("input[title='Search']", opts3)
+	pw.Type("input[title='Search']", "how to measure real user metrics with the xk6-playwright extension for k6?", opts4)
+	fp := pw.FirstPaint()
+	fcp := pw.FirstContentfulPaint()
+	ttmi := pw.TimeToMinimallyInteractive()
+	fid := pw.FirstInputDelay()
+	fmt.Printf("First Paint: %v \n", fp)
+	fmt.Printf("First Contentful Paint: %v \n", fcp)
+	fmt.Printf("Time to Minimally Interactive: %v \n", ttmi)
+	fmt.Printf("First Input Delay: %v \n", fid)
 	pw.Kill()
 }
 

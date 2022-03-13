@@ -1,12 +1,14 @@
 package playwright
 
 import (
+	"fmt"
 	"io/fs"
 	"io/ioutil"
 	"log"
 	"time"
 
 	"github.com/mxschmitt/playwright-go"
+	"github.com/tidwall/gjson"
 	"go.k6.io/k6/js/modules"
 )
 
@@ -142,8 +144,49 @@ func (p *Playwright) Evaluate(expression string, opts playwright.PageEvaluateOpt
 	return returnedValue;
 }
 
+//Reload wrapper around playwright reload page function
 func (p *Playwright) Reload() {
 	if _, err :=  p.Page.Reload(); err != nil {
 		log.Fatalf("error with reloading the page: %v", err)
 	}
+}
+
+//FirstPaint function that gathers the Real User Metrics for First Paint of the current page
+func (p *Playwright) FirstPaint() uint64 {
+	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByName('first-paint'))")
+	if err != nil {
+		log.Fatalf("error with getting the first-paint entries: %v", err)
+	}
+	entriesToString := fmt.Sprintf("%v", entries)
+	return gjson.Get(entriesToString, "0.startTime").Uint()
+}
+
+//FirstContentfulPaint function that gathers the Real User Metrics for First Contentful Paint of the current page
+func (p *Playwright) FirstContentfulPaint() uint64 {
+	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByName('first-contentful-paint'))")
+	if err != nil {
+		log.Fatalf("error with getting the first-contentful-paint entries: %v", err)
+	}
+	entriesToString := fmt.Sprintf("%v", entries)
+	return gjson.Get(entriesToString, "0.startTime").Uint()
+}
+
+//TimeToMinimallyInteractive function that gathers the Real User Metrics for Time to Minimally Interactive of the current page (based on the first input)
+func (p *Playwright) TimeToMinimallyInteractive() uint64 {
+	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByType('first-input'))")
+	if err != nil {
+		log.Fatalf("error with getting the first-input entries time to minimally interactive metrics: %v", err)
+	}
+	entriesToString := fmt.Sprintf("%v", entries)
+	return gjson.Get(entriesToString, "0.startTime").Uint()
+}
+
+//FirstInputDelay function that gathers the Real User Metrics for First Input Delay of the current page
+func (p *Playwright) FirstInputDelay() uint64 {
+	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByType('first-input'))")
+	if err != nil {
+		log.Fatalf("error with getting the first-input entries for first input delay metrics: %v", err)
+	}
+	entriesToString := fmt.Sprintf("%v", entries)
+	return gjson.Get(entriesToString, "0.processingStart").Uint() - gjson.Get(entriesToString, "0.startTime").Uint() //https://web.dev/fid/  for calc
 }
