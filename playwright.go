@@ -151,7 +151,7 @@ func (p *Playwright) Reload() {
 	}
 }
 
-//FirstPaint function that gathers the Real User Metrics for First Paint of the current page
+//FirstPaint function that gathers the Real User Monitoring Metrics for First Paint of the current page
 func (p *Playwright) FirstPaint() uint64 {
 	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByName('first-paint'))")
 	if err != nil {
@@ -161,7 +161,7 @@ func (p *Playwright) FirstPaint() uint64 {
 	return gjson.Get(entriesToString, "0.startTime").Uint()
 }
 
-//FirstContentfulPaint function that gathers the Real User Metrics for First Contentful Paint of the current page
+//FirstContentfulPaint function that gathers the Real User Monitoring Metrics for First Contentful Paint of the current page
 func (p *Playwright) FirstContentfulPaint() uint64 {
 	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByName('first-contentful-paint'))")
 	if err != nil {
@@ -171,7 +171,7 @@ func (p *Playwright) FirstContentfulPaint() uint64 {
 	return gjson.Get(entriesToString, "0.startTime").Uint()
 }
 
-//TimeToMinimallyInteractive function that gathers the Real User Metrics for Time to Minimally Interactive of the current page (based on the first input)
+//TimeToMinimallyInteractive function that gathers the Real User Monitoring Metrics for Time to Minimally Interactive of the current page (based on the first input)
 func (p *Playwright) TimeToMinimallyInteractive() uint64 {
 	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByType('first-input'))")
 	if err != nil {
@@ -181,7 +181,7 @@ func (p *Playwright) TimeToMinimallyInteractive() uint64 {
 	return gjson.Get(entriesToString, "0.startTime").Uint()
 }
 
-//FirstInputDelay function that gathers the Real User Metrics for First Input Delay of the current page
+//FirstInputDelay function that gathers the Real User Monitoring Metrics for First Input Delay of the current page
 func (p *Playwright) FirstInputDelay() uint64 {
 	entries, err := p.Page.Evaluate("JSON.stringify(performance.getEntriesByType('first-input'))")
 	if err != nil {
