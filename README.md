@@ -82,9 +82,9 @@ export default function () {
 
   //print out real user metrics of the google serach page
   console.log(`First Paint: ${pw.firstPaint()}ms`)
-	console.log(`First Contentful Paint: ${pw.firstContentfulPaint()}ms`)
-	console.log(`Time to Minimally Interactive: ${pw.timeToMinimallyInteractive()}ms`)
-	console.log(`First Input Delay: ${pw.firstInputDelay()}ms`)
+  console.log(`First Contentful Paint: ${pw.firstContentfulPaint()}ms`)
+  console.log(`Time to Minimally Interactive: ${pw.timeToMinimallyInteractive()}ms`)
+  console.log(`First Input Delay: ${pw.firstInputDelay()}ms`)
 
   pw.kill()
 }
