@@ -99,6 +99,7 @@ export default function () {
 | Action | Encompassed Playwright Function(s) | Description |
 |   :---   | :--- | :--- |
 | launch() | [`Run()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Run) & [`Launch()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserType.Launch) | starts playwright client and launches browser|
+| connect() | [`Run()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Run) & [`Connect()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserType.Connect) | attaches playwright client to existing browser instance|
 | newPage() | [`NewPage()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Browser.NewPage) | opens up a new page within the browser |
 | goto() | [`Goto()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Goto) | navigates to a specified url |
 | waitForSelector() | [`WaitForSelector()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.WaitForSelector) | waits for an element to be on the page based on the provided selector |
