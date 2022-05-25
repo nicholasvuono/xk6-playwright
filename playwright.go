@@ -39,6 +39,20 @@ func (p *Playwright) Launch(args playwright.BrowserTypeLaunchOptions) {
 	p.Browser = browser
 }
 
+//Connect attaches Playwright to an existing browser instance
+func (p *Playwright) Connect(url string, args playwright.BrowserTypeConnectOptions) {
+	pw, err := playwright.Run()
+	if err != nil {
+		log.Fatalf("could not start playwright: %v", err)
+	}
+	browser, err := pw.Chromium.Connect(url, args)
+	if err != nil {
+		log.Fatalf("could not launch browser: %v", err)
+	}
+	p.Self = pw
+	p.Browser = browser
+}
+
 //NewPage opens a new page within the browser
 func (p *Playwright) NewPage() {
 	page, err := p.Browser.NewPage()
