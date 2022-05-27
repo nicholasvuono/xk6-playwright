@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/mxschmitt/playwright-go"
+	"github.com/playwright-community/playwright-go"
 )
 
 var tests = []func(t *testing.T){
@@ -53,6 +53,16 @@ func TestPlaywright2(t *testing.T) {
 	fmt.Printf("Time to Minimally Interactive: %v \n", ttmi)
 	fmt.Printf("First Input Delay: %v \n", fid)
 	pw.Kill()
+}
+
+func TestPlaywright3(t *testing.T) {
+	var pw Playwright
+	opts := playwright.BrowserTypeConnectOverCDPOptions {
+	}
+	var opts2 playwright.PageGotoOptions
+
+	pw.Connect("http://localhost:9222", opts)
+	pw.Goto("https://www.unqork.com", opts2)
 }
 
 func TestAll(t *testing.T) {

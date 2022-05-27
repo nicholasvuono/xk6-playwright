@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/mxschmitt/playwright-go"
+	"github.com/playwright-community/playwright-go"
 	"github.com/tidwall/gjson"
 	"go.k6.io/k6/js/modules"
 )
@@ -40,17 +40,21 @@ func (p *Playwright) Launch(args playwright.BrowserTypeLaunchOptions) {
 }
 
 //Connect attaches Playwright to an existing browser instance
-func (p *Playwright) Connect(url string, args playwright.BrowserTypeConnectOptions) {
+func (p *Playwright) Connect(url string, args playwright.BrowserTypeConnectOverCDPOptions) {
 	pw, err := playwright.Run()
 	if err != nil {
 		log.Fatalf("could not start playwright: %v", err)
 	}
-	browser, err := pw.Chromium.Connect(url, args)
+	browser, err := pw.Chromium.ConnectOverCDP(url, args)
 	if err != nil {
 		log.Fatalf("could not launch browser: %v", err)
 	}
+	context := browser.Contexts()[0]
+
+
 	p.Self = pw
 	p.Browser = browser
+	p.Page = context.Pages()[0]
 }
 
 //NewPage opens a new page within the browser
