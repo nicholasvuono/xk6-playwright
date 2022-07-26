@@ -210,6 +210,14 @@ func (p *Playwright) FirstInputDelay() uint64 {
 
 //Cookies wrapper around playwright cookies fetch function
 func (p *Playwright) Cookies() []*playwright.BrowserContextCookiesResult {
+	if p.Browser == nil {
+		log.Fatalf("looks like there's no browser attached. please call `launch()` before accessing the cookies.")
+	}
+
+	if len(p.Browser.Contexts()) == 0 {
+		log.Fatalf("looks like there's no browser contexts are attached. please use `goto()` before accessing the cookies.")
+	}
+
 	cookies, err := p.Browser.Contexts()[0].Cookies()
 	if err != nil {
 		log.Fatalf("error with getting the cookies from the default context: %v", err)
