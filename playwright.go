@@ -12,7 +12,7 @@ import (
 	"go.k6.io/k6/js/modules"
 )
 
-//Register the extension on module initilization, avaialable to
+//Register the extension on module initialization, available to
 //import from JS as "k6/x/playwright".
 func init() {
 	modules.Register("k6/x/playwright", new(Playwright))
@@ -50,7 +50,6 @@ func (p *Playwright) Connect(url string, args playwright.BrowserTypeConnectOverC
 		log.Fatalf("could not launch browser: %v", err)
 	}
 	context := browser.Contexts()[0]
-
 
 	p.Self = pw
 	p.Browser = browser
@@ -126,7 +125,7 @@ func (p *Playwright) Screenshot(filename string, perm fs.FileMode, opts playwrig
 	if err != nil {
 		log.Fatalf("error with taking a screenshot: %v", err)
 	}
-	err = ioutil.WriteFile("Screenshot_" + time.Now().Format("2017-09-07 17:06:06") + ".png", image, perm)
+	err = ioutil.WriteFile("Screenshot_"+time.Now().Format("2017-09-07 17:06:06")+".png", image, perm)
 	if err != nil {
 		log.Fatalf("error with writing the screenshot to the file system: %v", err)
 	}
@@ -155,16 +154,16 @@ func (p *Playwright) DragAndDrop(sourceSelector string, targetSelector string, o
 
 //Evaluate wrapper around playwright evaluate page function that takes in an expresion and a set of options and evaluates the expression/function returning the resulting information.
 func (p *Playwright) Evaluate(expression string, opts playwright.PageEvaluateOptions) interface{} {
-	returnedValue, err := p.Page.Evaluate(expression, opts);
+	returnedValue, err := p.Page.Evaluate(expression, opts)
 	if err != nil {
 		log.Fatalf("error evaluating the expression: %v", err)
 	}
-	return returnedValue;
+	return returnedValue
 }
 
 //Reload wrapper around playwright reload page function
 func (p *Playwright) Reload() {
-	if _, err :=  p.Page.Reload(); err != nil {
+	if _, err := p.Page.Reload(); err != nil {
 		log.Fatalf("error with reloading the page: %v", err)
 	}
 }
@@ -207,4 +206,13 @@ func (p *Playwright) FirstInputDelay() uint64 {
 	}
 	entriesToString := fmt.Sprintf("%v", entries)
 	return gjson.Get(entriesToString, "0.processingStart").Uint() - gjson.Get(entriesToString, "0.startTime").Uint() //https://web.dev/fid/  for calc
+}
+
+//Cookies wrapper around playwright cookies fetch function
+func (p *Playwright) Cookies() []*playwright.BrowserContextCookiesResult {
+	cookies, err := p.Browser.Contexts()[0].Cookies()
+	if err != nil {
+		log.Fatalf("error with getting the cookies from the default context: %v", err)
+	}
+	return cookies
 }

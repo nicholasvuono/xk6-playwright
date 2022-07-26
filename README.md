@@ -113,6 +113,7 @@ export default function () {
 | dragAndDrop() | [`DragAndDrop()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.DragAndDrop) | drag an item from one place to another based on two selectors |
 | evaluate() | [`Evaluate()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Evaluate) | evaluate an expresion or function and get the return value |
 | reload() | [`Reload()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Reload) | reloads the current page |
+| cookies() | [`Cookies()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserContext.Cookies) | get all the cookies available for the default browser context.|
 | firstPaint() | N/A this function is unique to xk6-playwright [`What is First Paint?`](https://developer.mozilla.org/en-US/docs/Glossary/First_paint) | captures the first paint metric of the current page milliseconds |
 | firstContentfulPaint() | N/A this function is unique to xk6-playwright [`What is First Contentful Paint?`](https://web.dev/fcp/) | captures the first contentful paint metric of the current page milliseconds |
 | timeToMinimallyInteractive() | N/A this function is unique to xk6-playwright - This is based on the first input registerd on the current page - NOTE: this is how we personally like to determine when a page is minimally interactive. | captures the time to minimally interactive metric of the current page milliseconds |
