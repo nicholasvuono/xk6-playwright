@@ -45,10 +45,18 @@ Then:
   ```shell
   xk6 build --output xk6-playwright --with github.com/wosp-io/xk6-playwright
   ```
-
+  on Windows:
+  ```shell
+  xk6 build --output xk6-playwright.exe --with github.com/wosp-io/xk6-playwright
+  ```
   This will create a `xk6-playwright` binary file in the current working directory. This file can be used exactly the same as the main `k6` binary, with the addition of being able to run xk6-playwright scripts.
+  
+3. For the tool to work, the browsers and OS dependencies must be installed locally. You can use the following command for this:
+  ```shell
+  go run github.com/playwright-community/playwright-go/cmd/playwright@latest install --with-deps
+  ```
 
-3. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
+4. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
 
 </br>
 
