@@ -224,3 +224,21 @@ func (p *Playwright) Cookies() []*playwright.BrowserContextCookiesResult {
 	}
 	return cookies
 }
+
+type resource struct {
+	name string
+	size int
+	time int
+}
+
+func (p *Playwright) PageResourceMetrics() []resource {
+	var resources []resource
+	entries, err := p.Page.Evaluate("JSON.stringify(window.performance.getEntries)")
+	if err != nil {
+		log.Fatalf("error with getting the window performance entries for page resource metrics: %v", err)
+	}
+	entriesToString := fmt.Sprintf("%v", entries)
+	fmt.Println(entriesToString)
+	//resource := resouce{}
+	return resources
+}
