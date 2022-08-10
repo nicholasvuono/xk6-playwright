@@ -14,7 +14,7 @@
    <p>Special thanks to all the contributors over at <a href="https://github.com/grafana/k6/graphs/contributors" target="_blank">k6</a> and <a href="https://github.com/mxschmitt/playwright-go/graphs/contributors" target="_blank">playwright-go</a>
    <p>Here's to open source!</p>
 
-   <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.3.0-blue"></a>
+   <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.3.1-blue"></a>
    <a href="https://goreportcard.com/report/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright?dummy=unused" alt="Go Report Card"></a>
    <a href="https://github.com/wosp-io/xk6-playwright/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/wosp-io/xk6-playwright?color=red"></a>
 </div>
@@ -45,10 +45,18 @@ Then:
   ```shell
   xk6 build --output xk6-playwright --with github.com/wosp-io/xk6-playwright
   ```
-
+  on Windows:
+  ```shell
+  xk6 build --output xk6-playwright.exe --with github.com/wosp-io/xk6-playwright
+  ```
   This will create a `xk6-playwright` binary file in the current working directory. This file can be used exactly the same as the main `k6` binary, with the addition of being able to run xk6-playwright scripts.
+  
+3. For the tool to work, the browsers and OS dependencies must be installed locally. You can use the following command for this:
+  ```shell
+  go run github.com/playwright-community/playwright-go/cmd/playwright@latest install --with-deps
+  ```
 
-3. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
+4. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
 
 </br>
 
@@ -113,6 +121,7 @@ export default function () {
 | dragAndDrop() | [`DragAndDrop()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.DragAndDrop) | drag an item from one place to another based on two selectors |
 | evaluate() | [`Evaluate()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Evaluate) | evaluate an expresion or function and get the return value |
 | reload() | [`Reload()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Reload) | reloads the current page |
+| cookies() | [`Cookies()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserContext.Cookies) | get all the cookies available for the default browser context.|
 | firstPaint() | N/A this function is unique to xk6-playwright [`What is First Paint?`](https://developer.mozilla.org/en-US/docs/Glossary/First_paint) | captures the first paint metric of the current page milliseconds |
 | firstContentfulPaint() | N/A this function is unique to xk6-playwright [`What is First Contentful Paint?`](https://web.dev/fcp/) | captures the first contentful paint metric of the current page milliseconds |
 | timeToMinimallyInteractive() | N/A this function is unique to xk6-playwright - This is based on the first input registerd on the current page - NOTE: this is how we personally like to determine when a page is minimally interactive. | captures the time to minimally interactive metric of the current page milliseconds |

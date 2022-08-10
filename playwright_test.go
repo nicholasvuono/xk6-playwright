@@ -11,12 +11,13 @@ import (
 var tests = []func(t *testing.T){
 	TestPlaywright,
 	TestPlaywright2,
+	TestCookies,
 }
 
 func TestPlaywright(t *testing.T) {
 	var pw Playwright
 	headless := true
-	opts := playwright.BrowserTypeLaunchOptions {
+	opts := playwright.BrowserTypeLaunchOptions{
 		Headless: &headless,
 	}
 	var opts2 playwright.PageGotoOptions
@@ -32,7 +33,7 @@ func TestPlaywright(t *testing.T) {
 func TestPlaywright2(t *testing.T) {
 	var pw Playwright
 	headless := true
-	opts := playwright.BrowserTypeLaunchOptions {
+	opts := playwright.BrowserTypeLaunchOptions{
 		Headless: &headless,
 	}
 	var opts2 playwright.PageGotoOptions
@@ -57,12 +58,29 @@ func TestPlaywright2(t *testing.T) {
 
 func TestPlaywright3(t *testing.T) {
 	var pw Playwright
-	opts := playwright.BrowserTypeConnectOverCDPOptions {
-	}
+	opts := playwright.BrowserTypeConnectOverCDPOptions{}
 	var opts2 playwright.PageGotoOptions
 
 	pw.Connect("http://localhost:9222", opts)
 	pw.Goto("https://www.unqork.com", opts2)
+}
+
+func TestCookies(t *testing.T) {
+	var pw Playwright
+	headless := true
+	opts := playwright.BrowserTypeLaunchOptions{
+		Headless: &headless,
+	}
+	var opts2 playwright.PageGotoOptions
+
+	pw.Launch(opts)
+	pw.NewPage()
+	pw.Goto("https://www.google.com", opts2)
+	cookies := pw.Cookies()
+	for _, bccr := range cookies {
+		fmt.Printf(bccr.Name + ": " + bccr.Value + "\n")
+	}
+	pw.Kill()
 }
 
 func TestAll(t *testing.T) {
