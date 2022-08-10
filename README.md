@@ -14,7 +14,7 @@
    <p>Special thanks to all the contributors over at <a href="https://github.com/grafana/k6/graphs/contributors" target="_blank">k6</a> and <a href="https://github.com/mxschmitt/playwright-go/graphs/contributors" target="_blank">playwright-go</a>
    <p>Here's to open source!</p>
 
-   <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.3.1-blue"></a>
+   <a href="https://github.com/nicholasvuono/xk6-playwright/releases"><img alt="GitHub license" src="https://img.shields.io/badge/release-v0.3.2-blue"></a>
    <a href="https://goreportcard.com/report/github.com/wosp-io/xk6-playwright"><img src="https://goreportcard.com/badge/github.com/wosp-io/xk6-playwright?dummy=unused" alt="Go Report Card"></a>
    <a href="https://github.com/wosp-io/xk6-playwright/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/wosp-io/xk6-playwright?color=red"></a>
 </div>
@@ -106,7 +106,7 @@ export default function () {
 
 | Action | Encompassed Playwright Function(s) | Description |
 |   :---   | :--- | :--- |
-| launch() | [`Run()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Run) & [`Launch()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserType.Launch) | starts playwright client and launches browser|
+| launch() | [`Run()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Run) & [`Launch()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserType.Launch) | starts playwright client and launches Chromium browser|
 | connect() | [`Run()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Run) & [`Connect()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#BrowserType.Connect) | attaches playwright client to existing browser instance|
 | newPage() | [`NewPage()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Browser.NewPage) | opens up a new page within the browser |
 | goto() | [`Goto()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Goto) | navigates to a specified url |
