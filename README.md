@@ -63,6 +63,20 @@ Then:
 
 </br>
 
+## Install and Run with Docker
+
+Install:
+```shell
+docker pull nickvuono/xk6-playwright
+```
+
+Run Test Script:
+```shell
+docker run --rm -i nickvuono/xk6-playwright run script.js
+```
+
+</br>
+
 ## Simplest Working Example
 
 ```JavaScript
@@ -91,7 +105,7 @@ export default function () {
   pw.waitForSelector("input[title='Search']", {state: 'visible'})
   pw.type("input[title='Search']", "how to measure real user metrics with the xk6-playwright extension for k6?")
 
-  //print out real user metrics of the google serach page
+  //print out real user metrics of the google search page
   console.log(`First Paint: ${pw.firstPaint()}ms`)
   console.log(`First Contentful Paint: ${pw.firstContentfulPaint()}ms`)
   console.log(`Time to Minimally Interactive: ${pw.timeToMinimallyInteractive()}ms`)
