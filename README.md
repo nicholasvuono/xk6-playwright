@@ -75,6 +75,8 @@ Run Test Script:
 docker run --rm -i nickvuono/xk6-playwright run script.js
 ```
 
+Make sure to pass headless args or options when launching, and set it to true when running tests using Docker
+
 </br>
 
 ## Simplest Working Example
