@@ -8,7 +8,7 @@
 
 <br><br>
 <div align="center">
-   <img src="images/xk6_logo.PNG" width="400" alt="pdq"/><br>
+   <img src="images/xk6_logo.PNG" width="400" alt="xk6-playwright"/><br>
    <h1><b>xk6 playwright</b></h1><br>
    <p>k6 extension that adds support for browser automation and end-to-end web testing using <a href="https://github.com/mxschmitt/playwright-go" target="_blank">playwright-go</a></p>
    <p>Special thanks to all the contributors over at <a href="https://github.com/grafana/k6/graphs/contributors" target="_blank">k6</a> and <a href="https://github.com/mxschmitt/playwright-go/graphs/contributors" target="_blank">playwright-go</a>
@@ -20,9 +20,11 @@
 </div>
 
 ----
+## Origin Story
+
 This project was inspired by <a href="https://github.com/grafana/xk6-browser" target="_blank">xk6-browser</a>. Having seen the release we were excited to play around with the tool, but while using it we ran into some issues around context, page navigation, typing and button clicks. Having previously worked with <a href="https://github.com/mxschmitt/playwright-go" target="_blank">playwright-go</a> we thought it would be a great idea to create an extension around this so we had something we know would work to our liking. Thus <a href="https://github.com/wosp-io/xk6-playwright" target="_blank">xk6 playwright</a> was born!
 
-NOTE: we totally understand at the time of writing this that xk6-browser is not yet production ready, and that it is currently an early beta that has been released to the public that will evolve and get better over time. However, we still saw validity in creating this extension aiming to support something we have used and know works to our liking. Competition is not intended, we just want to make cool things that help us do our jobs!
+We totally understand at the time of writing this that xk6-browser is not yet production ready, and that it is currently an early beta that has been released to the public that will evolve and get better over time. However, we still saw validity in creating this extension aiming to support something we have used and know works to our liking. Competition is not intended, we just want to make cool things that help us do our jobs!
 
 </br>
 
@@ -118,6 +120,9 @@ export default function () {
 | screenshot() | [`Screenshot()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Screenshot) | attempts to take and save a png image of the current screen |
 | focus() | [`Focus()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Focus) | focuses a spcific element based on the provided selector |
 | fill() | [`Fill()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Fill) | fills an 'input' element on the page based on the provided selector and string to be entered |
+| selectOptions() | [`SelectOption()`](https://pkg.go.dev/github.com/playwright-community/playwright-go#Page.SelectOption) | selects an 'input' element from a list or dropdown of options on the page based on the provided selector and values to be selected |
+| check() | [`Check()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Check) | checks an element on the page based on the provided selector |
+| uncheck() | [`Uncheck()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Uncheck) | unchecks an element on the page based on the provided selector |
 | dragAndDrop() | [`DragAndDrop()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.DragAndDrop) | drag an item from one place to another based on two selectors |
 | evaluate() | [`Evaluate()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Evaluate) | evaluate an expresion or function and get the return value |
 | reload() | [`Reload()`](https://pkg.go.dev/github.com/mxschmitt/playwright-go#Page.Reload) | reloads the current page |

@@ -145,6 +145,28 @@ func (p *Playwright) Fill(selector string, filledString string, opts playwright.
 	}
 }
 
+//SelectOptions wrapper around playwright selectOptions page function that takes in a selector, values, and a set of options
+func (p *Playwright) SelectOptions(selector string, values playwright.SelectOptionValues, opts playwright.FrameSelectOptionOptions) {
+	_, err := p.Page.SelectOption(selector, values, opts);
+	if err != nil {
+		log.Fatalf("error selecting the option: %v", err)
+	}
+}
+
+//Check wrapper around playwright check page function that takes in a selector and a set of options
+func (p *Playwright) Check(selector string, opts playwright.FrameCheckOptions)  {
+	if err := p.Page.Check(selector, opts); err != nil {
+		log.Fatalf("error with checking the field: %v", err)
+	}
+}
+
+//Uncheck wrapper around playwright uncheck page function that takes in a selector and a set of options
+func (p *Playwright) Uncheck(selector string, opts playwright.FrameUncheckOptions)  {
+	if err := p.Page.Uncheck(selector, opts); err != nil {
+		log.Fatalf("error with unchecking the field: %v", err)
+	}
+}
+
 //DragAndDrop wrapper around playwright draganddrop page function that takes in two selectors(source and target) and a set of options
 func (p *Playwright) DragAndDrop(sourceSelector string, targetSelector string, opts playwright.FrameDragAndDropOptions) {
 	if err := p.Page.DragAndDrop(sourceSelector, targetSelector, opts); err != nil {
@@ -225,6 +247,8 @@ func (p *Playwright) Cookies() []*playwright.BrowserContextCookiesResult {
 	return cookies
 }
 
+
+/*
 type resource struct {
 	name string
 	size int
@@ -242,3 +266,4 @@ func (p *Playwright) PageResourceMetrics() []resource {
 	//resource := resouce{}
 	return resources
 }
+*/
