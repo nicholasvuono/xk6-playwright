@@ -1,11 +1,12 @@
 FROM golang:buster
 RUN apt-get update
 RUN apt install git
+RUN go env -w GOPROXY=https://proxy.golang.org
 RUN git clone https://github.com/grafana/k6.git
 RUN go env -w GO111MODULE=off
 RUN go get github.com/playwright-community/playwright-go
 RUN go install github.com/playwright-community/playwright-go/cmd/playwright
-RUN go env -w  GO111MODULE=auto
+RUN go env -w GO111MODULE=auto
 RUN apt-get install -y \
     fonts-liberation \
     gconf-service \
