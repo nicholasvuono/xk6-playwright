@@ -20,6 +20,7 @@
 </div>
 
 ----
+<br><br>
 ## Origin Story
 
 This project was inspired by <a href="https://github.com/grafana/xk6-browser" target="_blank">xk6-browser</a>. Having seen the release we were excited to play around with the tool, but while using it we ran into some issues around context, page navigation, typing and button clicks. Having previously worked with <a href="https://github.com/mxschmitt/playwright-go" target="_blank">playwright-go</a> we thought it would be a great idea to create an extension around this so we had something we know would work to our liking. Thus <a href="https://github.com/wosp-io/xk6-playwright" target="_blank">xk6 playwright</a> was born!
@@ -132,8 +133,7 @@ export default function () {
 | timeToMinimallyInteractive() | N/A this function is unique to xk6-playwright - This is based on the first input registerd on the current page - NOTE: this is how we personally like to determine when a page is minimally interactive. | captures the time to minimally interactive metric of the current page milliseconds |
 | firstInputDelay() | N/A this function is unique to xk6-playwright [`What is First Input Delay?`](https://web.dev/fid/) | captures the first input delay metric of the current page in milliseconds |
 
-
-NOTE: the above 'Encompassed Playwright Function(s)' will link to the [playwright-go package documentation](https://pkg.go.dev/github.com/mxschmitt/playwright-go#section-readme) to give an in-depth overview of how these functions will behave from a low-level perspective.
+The above 'Encompassed Playwright Function(s)' will link to the [playwright-go package documentation](https://pkg.go.dev/github.com/mxschmitt/playwright-go#section-readme) to give an in-depth overview of how these functions will behave from a low-level perspective.
 
 If you would like a high-level perspective on how these actions work you will be better served with the [Playwright API Documentation](https://playwright.dev/docs/api/class-playwright)
 
