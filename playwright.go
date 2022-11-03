@@ -93,6 +93,48 @@ func (p *Playwright) WaitForSelector(selector string, opts playwright.PageWaitFo
 	}
 }
 
+func (p *Playwright) WaitForURL(url string, opts playwright.FrameWaitForURLOptions) {
+	if err := p.Page.WaitForURL(url, opts); err != nil {
+		log.Fatalf("error with waiting for the url: %v", err)
+	}
+}
+
+func (p *Playwright) WaitForEvent(event string, predicate interface{}) {
+	p.Page.WaitForEvent(event, predicate)
+}
+
+func (p *Playwright) Locator(selector string, opts playwright.PageLocatorOptions) *locatorWrapper {
+	locator, err := p.Page.Locator(selector, opts)
+	if err != nil {
+		log.Fatalf("error with locator: %v", err)
+	}
+	return newLocatorWrapper(locator)
+}
+
+func (p *Playwright) SetExtraHTTPHeaders(headers map[string]string) {
+	err := p.Page.SetExtraHTTPHeaders(headers)
+	if err != nil {
+		log.Fatalf("SetExtraHTTPHeaders function error: %v", err)
+	}
+}
+
+func (p *Playwright) WaitForNavigation(opts playwright.PageWaitForNavigationOptions) {
+	_, err := p.Page.WaitForNavigation(opts)
+	if err != nil {
+		log.Fatalf("WaitForNavigation function error: %v", err)
+	}
+}
+
+func (p *Playwright) ExpectFileChooser(cb func() error) *fileChooserWrapper {
+	result, err := p.Page.ExpectFileChooser(cb)
+
+	if err != nil {
+		log.Fatalf("error with expecting file chooser: %v", err)
+	}
+
+	return newFileChooserWrapper(result)
+}
+
 //Click wrapper around playwright click page function that takes in a selector and a set of options
 func (p *Playwright) Click(selector string, opts playwright.PageClickOptions) {
 	if err := p.Page.Click(selector, opts); err != nil {
