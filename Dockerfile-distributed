@@ -1,0 +1,58 @@
+FROM loadimpact/k6:latest
+USER root
+RUN apk add --update --no-cache vim git make musl-dev go curl chromium
+# Configure Go
+WORKDIR /go
+ENV GOROOT /usr/lib/go
+ENV GOPATH /go
+ENV PATH /go/bin:$PATH
+ENV PATH=${GOPATH}/bin:${GOROOT}/bin:/usr/local/go/bin:$PATH
+ENV GOBIN=$GOROOT/bin
+RUN mkdir -p ${GOROOT}/src ${GOROOT}/bin
+
+RUN apk add --update --no-cache git
+RUN go env -w GOPROXY=https://proxy.golang.org
+RUN git clone https://github.com/grafana/k6.git
+RUN go env -w GO111MODULE=off
+RUN go get github.com/playwright-community/playwright-go
+RUN go env -w GO111MODULE=on
+
+WORKDIR /home/k6/
+RUN wget https://unofficial-builds.nodejs.org/download/release/v14.4.0/node-v14.4.0-linux-x64-musl.tar.xz
+RUN tar -xvf node-v14.4.0-linux-x64-musl.tar.xz
+
+ENV PATH=/home/k6/node-v14.4.0-linux-x64-musl/bin:$PATH
+
+WORKDIR /go
+RUN go install github.com/playwright-community/playwright-go/cmd/playwright@latest
+RUN set -e && playwright install 2>&1 | tee  playwright-install.log && set +e
+RUN export PL_PATH_TEMP=$(cat playwright-install.log | sed -n "s/^.*Downloading\sdriver\sto\s*\(\S*\).*$/\1/p") \
+    && cat $PL_PATH_TEMP/playwright.sh | sed "s/\$SCRIPT_PATH\/node/node/" > $PL_PATH_TEMP/playwright.sh
+
+RUN playwright install chromium
+
+# Link chromium
+RUN export CHROME_FOLDER=$(ls /root/.cache/ms-playwright | grep chromium) \
+    && rm -rf /root/.cache/ms-playwright/$CHROME_FOLDER/chrome-linux \
+    && ln -s /usr/lib/chromium/ /root/.cache/ms-playwright/$CHROME_FOLDER/chrome-linux
+
+WORKDIR /go/k6
+RUN CGO_ENABLED=0 go install -a -trimpath -ldflags "-s -w -X ./lib/consts.VersionDetails=$(date -u +"%FT%T%z")/$(git describe --always --long --dirty)"
+RUN go install go.k6.io/xk6/cmd/xk6@latest
+
+COPY . xk6-playwright-repo
+RUN xk6 build v0.39.0 --with github.com/wosp-io/xk6-playwright=/go/k6/xk6-playwright-repo
+RUN cp /go/k6/k6 /usr/lib/go/bin/k6 \
+    && rm /usr/bin/k6 \
+    && ln -s /usr/lib/go/bin/k6 /usr/bin/k6
+
+RUN export PW_GO_PATH=$(ls /root/.cache/ms-playwright-go/) \
+    && chmod +x /root/.cache/ms-playwright-go/$PW_GO_PATH/playwright.sh
+
+RUN mkdir /home/k6/.cache/ \
+    && cp -R /root/.cache/ms-playwright/ /home/k6/.cache/ms-playwright/ \
+    && cp -R /root/.cache/ms-playwright-go/ /home/k6/.cache/ms-playwright-go/
+
+
+USER k6
+WORKDIR /home/k6
