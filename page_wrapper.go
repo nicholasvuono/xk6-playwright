@@ -103,6 +103,10 @@ func (p *pageWrapper) Sleep(time float64) {
 	p.Page.WaitForTimeout(time)
 }
 
+func (p *pageWrapper) WaitForTimeout(time float64) {
+	p.Page.WaitForTimeout(time)
+}
+
 // Screenshot wrapper around playwright screenshot page function that attempts to take and save a png image of the current screen.
 func (p *pageWrapper) Screenshot(filename string, perm fs.FileMode, opts playwright.PageScreenshotOptions) {
 	image, err := p.Page.Screenshot(opts)
@@ -212,4 +216,11 @@ func (p *pageWrapper) FirstInputDelay() uint64 {
 	}
 	entriesToString := fmt.Sprintf("%v", entries)
 	return gjson.Get(entriesToString, "0.processingStart").Uint() - gjson.Get(entriesToString, "0.startTime").Uint() //https://web.dev/fid/  for calc
+}
+
+func (p *pageWrapper) SetViewportSize(width, height int) {
+	err := p.Page.SetViewportSize(width, height)
+	if err != nil {
+		log.Fatalf("Error while setting viewPort size :: %v", err)
+	}
 }
