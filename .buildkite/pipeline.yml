@@ -1,0 +1,17 @@
+steps:
+  - name: ":docker: build only"
+    branches: "!main"
+    command:
+      - docker build -f Dockerfile-distributed -t docker.cloudsmith.io/lendinghome/dev/k6-pw-distributed:latest .
+    timeout_in_minutes: 10
+    agents:
+      queue: terraform
+  - name: ":docker: build and push"
+    branches: "main"
+    command:
+      - docker build -f Dockerfile-distributed -t docker.cloudsmith.io/lendinghome/dev/k6-pw-distributed:latest .
+      - docker login -u="$CLOUDSMITH_BOT_USERNAME" -p="$CLOUDSMITH_BOT_TOKEN" docker.cloudsmith.io
+      - docker push docker.cloudsmith.io/lendinghome/dev/k6-pw-distributed:latest
+    timeout_in_minutes: 10
+    agents:
+      queue: terraform
