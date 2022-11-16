@@ -27,7 +27,8 @@ WORKDIR /go
 RUN go install github.com/playwright-community/playwright-go/cmd/playwright@latest
 RUN set -e && playwright install 2>&1 | tee  playwright-install.log && set +e
 RUN export PL_PATH_TEMP=$(cat playwright-install.log | sed -n "s/^.*Downloading\sdriver\sto\s*\(\S*\).*$/\1/p") \
-    && cat $PL_PATH_TEMP/playwright.sh | sed "s/\$SCRIPT_PATH\/node/node/" > $PL_PATH_TEMP/playwright.sh
+    && export PW_SCRIPT_CONTENT=$(cat $PL_PATH_TEMP/playwright.sh | sed "s/\$SCRIPT_PATH\/node/node/") \
+    && echo "$PW_SCRIPT_CONTENT" > $PL_PATH_TEMP/playwright.sh
 
 RUN playwright install chromium
 
