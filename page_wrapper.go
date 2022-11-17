@@ -224,3 +224,18 @@ func (p *pageWrapper) SetViewportSize(width, height int) {
 		log.Fatalf("Error while setting viewPort size :: %v", err)
 	}
 }
+
+func (p *pageWrapper) ExpectNavigation(cb func() error, options ...playwright.PageWaitForNavigationOptions) {
+	navigationOptions := make([]interface{}, 0)
+	for _, option := range options {
+		navigationOptions = append(navigationOptions, option)
+	}
+	_, err := newExpectWrapper(p.Page.WaitForNavigation, navigationOptions, cb)
+	if err != nil {
+		log.Fatalf("error with expecting navigation: %v", err)
+	}
+}
+
+func (p *pageWrapper) Url() string {
+	return p.Page.URL()
+}
