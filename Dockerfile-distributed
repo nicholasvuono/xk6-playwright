@@ -42,7 +42,7 @@ RUN CGO_ENABLED=0 go install -a -trimpath -ldflags "-s -w -X ./lib/consts.Versio
 RUN go install go.k6.io/xk6/cmd/xk6@latest
 
 COPY . xk6-playwright-repo
-RUN xk6 build v0.39.0 --with github.com/wosp-io/xk6-playwright=/go/k6/xk6-playwright-repo
+RUN xk6 build v0.41.0 --with github.com/wosp-io/xk6-playwright=/go/k6/xk6-playwright-repo
 RUN cp /go/k6/k6 /usr/lib/go/bin/k6 \
     && rm /usr/bin/k6 \
     && ln -s /usr/lib/go/bin/k6 /usr/bin/k6
