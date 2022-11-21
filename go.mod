@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/playwright-community/playwright-go v0.2000.1
-	go.k6.io/k6 v0.36.0
+	go.k6.io/k6 v0.41.0
 )
 
 require (

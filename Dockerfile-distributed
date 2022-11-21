@@ -25,7 +25,7 @@ ENV PATH=/home/k6/node-v14.4.0-linux-x64-musl/bin:$PATH
 
 WORKDIR /go
 RUN go install github.com/playwright-community/playwright-go/cmd/playwright@latest
-RUN set -e && playwright install 2>&1 | tee  playwright-install.log && set +e
+RUN playwright install 2>&1 | tee  playwright-install.log
 RUN export PL_PATH_TEMP=$(cat playwright-install.log | sed -n "s/^.*Downloading\sdriver\sto\s*\(\S*\).*$/\1/p") \
     && export PW_SCRIPT_CONTENT=$(cat $PL_PATH_TEMP/playwright.sh | sed "s/\$SCRIPT_PATH\/node/node/") \
     && echo "$PW_SCRIPT_CONTENT" > $PL_PATH_TEMP/playwright.sh
@@ -42,7 +42,7 @@ RUN CGO_ENABLED=0 go install -a -trimpath -ldflags "-s -w -X ./lib/consts.Versio
 RUN go install go.k6.io/xk6/cmd/xk6@latest
 
 COPY . xk6-playwright-repo
-RUN xk6 build v0.39.0 --with github.com/wosp-io/xk6-playwright=/go/k6/xk6-playwright-repo
+RUN xk6 build v0.41.0 --with github.com/wosp-io/xk6-playwright=/go/k6/xk6-playwright-repo
 RUN cp /go/k6/k6 /usr/lib/go/bin/k6 \
     && rm /usr/bin/k6 \
     && ln -s /usr/lib/go/bin/k6 /usr/bin/k6
