@@ -63,6 +63,14 @@ func (loc *locatorWrapper) IsVisible(options ...playwright.FrameIsVisibleOptions
 	return isVisible
 }
 
+func (loc *locatorWrapper) IsChecked(options ...playwright.FrameIsCheckedOptions) bool {
+	isChecked, err := loc.Locator.IsChecked(options...)
+	if err != nil {
+		log.Fatalf("isChecked function error: %v", err)
+	}
+	return isChecked
+}
+
 func (loc *locatorWrapper) Last() *locatorWrapper {
 	lastLocator, err := loc.Locator.Last()
 	if err != nil {

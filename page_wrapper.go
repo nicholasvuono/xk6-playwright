@@ -218,8 +218,8 @@ func (p *pageWrapper) FirstInputDelay() uint64 {
 	return gjson.Get(entriesToString, "0.processingStart").Uint() - gjson.Get(entriesToString, "0.startTime").Uint() //https://web.dev/fid/  for calc
 }
 
-func (p *pageWrapper) SetViewportSize(width, height int) {
-	err := p.Page.SetViewportSize(width, height)
+func (p *pageWrapper) SetViewportSize(viewPortSize playwright.ViewportSize) {
+	err := p.Page.SetViewportSize(viewPortSize.Width, viewPortSize.Height)
 	if err != nil {
 		log.Fatalf("Error while setting viewPort size :: %v", err)
 	}
@@ -238,4 +238,19 @@ func (p *pageWrapper) ExpectNavigation(cb func() error, options ...playwright.Pa
 
 func (p *pageWrapper) Url() string {
 	return p.Page.URL()
+}
+
+func (p *pageWrapper) Pause() {
+	err := p.Page.Pause();
+	if err != nil {
+		log.Fatalf("error while page pause: %v", err)
+	}
+}
+
+func (p *pageWrapper) SetDefaultNavigationTimeout(timeout float64) {
+	p.Page.SetDefaultNavigationTimeout(timeout);
+}
+
+func (p *pageWrapper) SetDefaultTimeout(timeout float64) {
+	p.Page.SetDefaultTimeout(timeout);
 }
