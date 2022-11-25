@@ -172,8 +172,8 @@ func (p *pageWrapper) Evaluate(expression string, opts playwright.PageEvaluateOp
 }
 
 // Reload wrapper around playwright reload page function
-func (p *pageWrapper) Reload() {
-	if _, err := p.Page.Reload(); err != nil {
+func (p *pageWrapper) Reload(opts playwright.PageReloadOptions) {
+	if _, err := p.Page.Reload(opts); err != nil {
 		log.Fatalf("error with reloading the page: %v", err)
 	}
 }
@@ -253,4 +253,13 @@ func (p *pageWrapper) SetDefaultNavigationTimeout(timeout float64) {
 
 func (p *pageWrapper) SetDefaultTimeout(timeout float64) {
 	p.Page.SetDefaultTimeout(timeout);
+}
+
+func (p *pageWrapper) ExpectedDialog(cb func() error) *dialogWrapper {
+	result, err := p.Page.ExpectedDialog(cb)
+
+	if err != nil {
+		log.Fatalf("error with expecting dialog: %v", err)
+	}
+	return newDialogWrapper(result)
 }
