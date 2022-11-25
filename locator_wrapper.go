@@ -71,6 +71,14 @@ func (loc *locatorWrapper) IsChecked(options ...playwright.FrameIsCheckedOptions
 	return isChecked
 }
 
+func (loc *locatorWrapper) IsEnabled(options ...playwright.FrameIsEnabledOptions) bool {
+	isEnabled, err := loc.Locator.IsEnabled(options...)
+	if err != nil {
+		log.Fatalf("isEnabled function error: %v", err)
+	}
+	return isEnabled
+}
+
 func (loc *locatorWrapper) Last() *locatorWrapper {
 	lastLocator, err := loc.Locator.Last()
 	if err != nil {
@@ -83,5 +91,20 @@ func (loc *locatorWrapper) Type(text string, options ...playwright.PageTypeOptio
 	err := loc.Locator.Type(text, options...)
 	if err != nil {
 		log.Fatalf("type function error: %v", err)
+	}
+}
+
+func (loc *locatorWrapper) Nth(index int) *locatorWrapper {
+	nthLocator, err := loc.Locator.Nth(index);
+	if err != nil {
+		log.Fatalf("locator.nth function error: %v", err)
+	}
+	return newLocatorWrapper(nthLocator)
+}
+
+func (loc *locatorWrapper) Check() {
+	err := loc.Locator.Check();
+	if err != nil {
+		log.Fatalf("locator.Check function error: %v", err)
 	}
 }
