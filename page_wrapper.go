@@ -241,18 +241,18 @@ func (p *pageWrapper) Url() string {
 }
 
 func (p *pageWrapper) Pause() {
-	err := p.Page.Pause();
+	err := p.Page.Pause()
 	if err != nil {
 		log.Fatalf("error while page pause: %v", err)
 	}
 }
 
 func (p *pageWrapper) SetDefaultNavigationTimeout(timeout float64) {
-	p.Page.SetDefaultNavigationTimeout(timeout);
+	p.Page.SetDefaultNavigationTimeout(timeout)
 }
 
 func (p *pageWrapper) SetDefaultTimeout(timeout float64) {
-	p.Page.SetDefaultTimeout(timeout);
+	p.Page.SetDefaultTimeout(timeout)
 }
 
 func (p *pageWrapper) ExpectedDialog(cb func() error) *dialogWrapper {
