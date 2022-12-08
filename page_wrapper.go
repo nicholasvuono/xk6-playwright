@@ -263,3 +263,10 @@ func (p *pageWrapper) ExpectedDialog(cb func() error) *dialogWrapper {
 	}
 	return newDialogWrapper(result)
 }
+
+func (p *pageWrapper) AcceptDialog() {
+	p.Page.On("dialog", func(dialog playwright.Dialog) {
+		fmt.Print("accepting the dialog");
+		dialog.Accept();
+	})
+}
