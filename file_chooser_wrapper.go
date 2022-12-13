@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"io/ioutil"
+	"encoding/base64"
+	"strings"
 
 	"github.com/playwright-community/playwright-go"
 )
@@ -14,9 +16,9 @@ type fileChooserWrapper struct {
 }
 
 type InputFilePaths struct {
-	Name     string
+	Name	 string
 	MimeType string
-	Path     string
+	Path	 string
 }
 
 func (f *fileChooserWrapper) SetFiles(files []InputFilePaths, options ...playwright.ElementHandleSetInputFilesOptions) {
@@ -28,7 +30,18 @@ func (f *fileChooserWrapper) SetFiles(files []InputFilePaths, options ...playwri
 	}
 
 	for _, inputFilePath := range files {
-		file, err := ioutil.ReadFile(filepath.Join(cwd, inputFilePath.Path))
+
+		var file []byte
+		var err error
+
+		if strings.HasPrefix(inputFilePath.Path, "data:") {
+			base64File := strings.SplitN(inputFilePath.Path, "base64,", 2)
+
+			file, err = base64.StdEncoding.DecodeString(base64File[1])
+
+		} else {
+			file, err = ioutil.ReadFile(filepath.Join(cwd, inputFilePath.Path))
+		}
 
 		if err != nil {
 			log.Fatalf("error with reading file: %v", err)
