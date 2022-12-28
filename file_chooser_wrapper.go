@@ -1,24 +1,26 @@
 package playwright
 
 import (
+	"encoding/base64"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
-	"io/ioutil"
-	"encoding/base64"
 	"strings"
 
 	"github.com/playwright-community/playwright-go"
+	"go.k6.io/k6/js/modules"
 )
 
 type fileChooserWrapper struct {
 	FileChooser playwright.FileChooser
+	vu          modules.VU
 }
 
 type InputFilePaths struct {
-	Name	 string
+	Name     string
 	MimeType string
-	Path	 string
+	Path     string
 }
 
 func (f *fileChooserWrapper) SetFiles(files []InputFilePaths, options ...playwright.ElementHandleSetInputFilesOptions) {
@@ -26,7 +28,7 @@ func (f *fileChooserWrapper) SetFiles(files []InputFilePaths, options ...playwri
 	log.Printf("I am in our custom setFiles go function")
 	cwd, err := os.Getwd()
 	if err != nil {
-		log.Fatalf("could not get cwd: %v", err)
+		Throw(f.vu.Runtime(), "Error getting current working directory (cwd)", err)
 	}
 
 	for _, inputFilePath := range files {
@@ -44,7 +46,7 @@ func (f *fileChooserWrapper) SetFiles(files []InputFilePaths, options ...playwri
 		}
 
 		if err != nil {
-			log.Fatalf("error with reading file: %v", err)
+			Throw(f.vu.Runtime(), "Error reading file", err)
 		}
 
 		inputFiles = append(inputFiles, playwright.InputFile{
@@ -56,12 +58,13 @@ func (f *fileChooserWrapper) SetFiles(files []InputFilePaths, options ...playwri
 
 	err = f.FileChooser.SetFiles(inputFiles, options...)
 	if err != nil {
-		log.Fatalf("error with setting files: %v", err)
+		Throw(f.vu.Runtime(), "Error setting files", err)
 	}
 }
 
-func newFileChooserWrapper(fileChooser playwright.FileChooser) *fileChooserWrapper {
-	return &fileChooserWrapper {
+func newFileChooserWrapper(fileChooser playwright.FileChooser, vu modules.VU) *fileChooserWrapper {
+	return &fileChooserWrapper{
 		FileChooser: fileChooser,
+		vu:          vu,
 	}
 }

@@ -1,32 +1,33 @@
 package playwright
 
 import (
-	"log"
-
 	"github.com/playwright-community/playwright-go"
+	"go.k6.io/k6/js/modules"
 )
 
 type locatorWrapper struct {
 	Locator playwright.Locator
+	vu      modules.VU
 }
 
-func newLocatorWrapper(locator playwright.Locator) *locatorWrapper {
+func newLocatorWrapper(locator playwright.Locator, vu modules.VU) *locatorWrapper {
 	return &locatorWrapper{
 		Locator: locator,
+		vu:      vu,
 	}
 }
 
 func (loc *locatorWrapper) Click(options ...playwright.PageClickOptions) {
 	err := loc.Locator.Click(options...)
 	if err != nil {
-		log.Fatalf("could not get click work: %v", err)
+		Throw(loc.vu.Runtime(), "Error clicking element", err)
 	}
 }
 
 func (loc *locatorWrapper) Count() int {
 	num, err := loc.Locator.Count()
 	if err != nil {
-		log.Fatalf("Locator count function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error counting elements", err)
 	}
 	return num
 }
@@ -34,23 +35,23 @@ func (loc *locatorWrapper) Count() int {
 func (loc *locatorWrapper) Fill(value string, options ...playwright.FrameFillOptions) {
 	err := loc.Locator.Fill(value, options...)
 	if err != nil {
-		log.Fatalf("fill function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error filling input", err)
 	}
 }
 
 func (loc *locatorWrapper) First() *locatorWrapper {
 	firstLocator, err := loc.Locator.First()
 	if err != nil {
-		log.Fatalf("locator.first function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error getting first element", err)
 	}
 
-	return newLocatorWrapper(firstLocator)
+	return newLocatorWrapper(firstLocator, loc.vu)
 }
 
 func (loc *locatorWrapper) IsDisabled(options ...playwright.FrameIsDisabledOptions) bool {
 	isDisabled, err := loc.Locator.IsDisabled(options...)
 	if err != nil {
-		log.Fatalf("isDisabled function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error checking if element is disabled", err)
 	}
 	return isDisabled
 }
@@ -58,7 +59,7 @@ func (loc *locatorWrapper) IsDisabled(options ...playwright.FrameIsDisabledOptio
 func (loc *locatorWrapper) IsVisible(options ...playwright.FrameIsVisibleOptions) bool {
 	isVisible, err := loc.Locator.IsVisible(options...)
 	if err != nil {
-		log.Fatalf("isVisible function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error checking if element is visible", err)
 	}
 	return isVisible
 }
@@ -66,7 +67,7 @@ func (loc *locatorWrapper) IsVisible(options ...playwright.FrameIsVisibleOptions
 func (loc *locatorWrapper) IsChecked(options ...playwright.FrameIsCheckedOptions) bool {
 	isChecked, err := loc.Locator.IsChecked(options...)
 	if err != nil {
-		log.Fatalf("isChecked function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error checking if element is checked", err)
 	}
 	return isChecked
 }
@@ -74,7 +75,7 @@ func (loc *locatorWrapper) IsChecked(options ...playwright.FrameIsCheckedOptions
 func (loc *locatorWrapper) IsEnabled(options ...playwright.FrameIsEnabledOptions) bool {
 	isEnabled, err := loc.Locator.IsEnabled(options...)
 	if err != nil {
-		log.Fatalf("isEnabled function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error checking if element is enabled", err)
 	}
 	return isEnabled
 }
@@ -82,29 +83,29 @@ func (loc *locatorWrapper) IsEnabled(options ...playwright.FrameIsEnabledOptions
 func (loc *locatorWrapper) Last() *locatorWrapper {
 	lastLocator, err := loc.Locator.Last()
 	if err != nil {
-		log.Fatalf("locator.last function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error getting last element", err)
 	}
-	return newLocatorWrapper(lastLocator)
+	return newLocatorWrapper(lastLocator, loc.vu)
 }
 
 func (loc *locatorWrapper) Type(text string, options ...playwright.PageTypeOptions) {
 	err := loc.Locator.Type(text, options...)
 	if err != nil {
-		log.Fatalf("type function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error getting element type", err)
 	}
 }
 
 func (loc *locatorWrapper) Nth(index int) *locatorWrapper {
-	nthLocator, err := loc.Locator.Nth(index);
+	nthLocator, err := loc.Locator.Nth(index)
 	if err != nil {
-		log.Fatalf("locator.nth function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error getting the nth element", err)
 	}
-	return newLocatorWrapper(nthLocator)
+	return newLocatorWrapper(nthLocator, loc.vu)
 }
 
 func (loc *locatorWrapper) Check() {
-	err := loc.Locator.Check();
+	err := loc.Locator.Check()
 	if err != nil {
-		log.Fatalf("locator.Check function error: %v", err)
+		Throw(loc.vu.Runtime(), "Error checking input field", err)
 	}
 }
