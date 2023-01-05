@@ -24,6 +24,13 @@ func (loc *locatorWrapper) Click(options ...playwright.PageClickOptions) {
 	}
 }
 
+func (loc *locatorWrapper) ScrollIntoViewIfNeeded(options ...playwright.LocatorScrollIntoViewIfNeededOptions) {
+	err := loc.Locator.ScrollIntoViewIfNeeded(options...)
+	if err != nil {
+		Throw(loc.vu.Runtime(), "Error scrolling element into view", err)
+	}
+}
+
 func (loc *locatorWrapper) Count() int {
 	num, err := loc.Locator.Count()
 	if err != nil {
