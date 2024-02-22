@@ -64,7 +64,7 @@ func TestPlaywright3(t *testing.T) {
 	var opts2 playwright.PageGotoOptions
 
 	pw.Connect("http://localhost:9222", opts)
-	pw.Goto("https://www.unqork.com", opts2)
+	pw.Goto("https://www.github.com", opts2)
 }
 
 func TestPersistentContext(t *testing.T) {
