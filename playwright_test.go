@@ -28,7 +28,7 @@ func TestPlaywright(t *testing.T) {
 	pw.Launch(opts)
 	pw.NewPage()
 	pw.Goto("https://www.github.com", opts2)
-	pw.WaitForSelector("input[name='q']", opts3)
+	pw.WaitForSelector(".search-input", opts3)
 	pw.Kill()
 }
 
@@ -45,8 +45,8 @@ func TestPlaywright2(t *testing.T) {
 	pw.Launch(opts)
 	pw.NewPage()
 	pw.Goto("https://www.github.com", opts2)
-	pw.WaitForSelector("input[name='q']", opts3)
-	pw.Type("input[name='q']", "how to measure real user metrics with the xk6-playwright extension for k6?", opts4)
+	pw.WaitForSelector(".search-input", opts3)
+	pw.Type(".search-input", "how to measure real user metrics with the xk6-playwright extension for k6?", opts4)
 	fp := pw.FirstPaint()
 	fcp := pw.FirstContentfulPaint()
 	ttmi := pw.TimeToMinimallyInteractive()
@@ -79,7 +79,7 @@ func TestPersistentContext(t *testing.T) {
 	pw.LaunchPersistent("./tmp/context-"+strconv.Itoa(rand.Intn(1000)), opts)
 	pw.NewPage()
 	pw.Goto("https://www.github.com", opts2)
-	pw.WaitForSelector("input[name='q']", opts3)
+	pw.WaitForSelector(".search-input']", opts3)
 	pw.Kill()
 }
 

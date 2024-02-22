@@ -56,7 +56,7 @@ Then:
   
 3. For the tool to work, the browsers and OS dependencies must be installed locally. You can use the following command for this:
   ```shell
-  go run github.com/playwright-community/playwright-go/cmd/playwright@latest install --with-deps
+  go run github.com/playwright-community/playwright-go/cmd/playwright@v0.2000.1  install --with-deps
   ```
 
 4. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.

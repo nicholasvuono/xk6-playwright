@@ -3,9 +3,9 @@ import pw from 'k6/x/playwright';
 export default function () {
   pw.launch()
   pw.newPage()
-  pw.goto("https://www.google.com/")
-  pw.waitForSelector("input[title='Search']", {state: 'visible'})
-  pw.type("input[title='Search']", "how to measure real user metrics with the xk6-playwright extension for k6?")
+  pw.goto("https://www.github.com/")
+  pw.waitForSelector(".search-input", {state: 'visible'})
+  pw.type(".search-input", "how to measure real user metrics with the xk6-playwright extension for k6?")
 
   //print out real user metrics of the google search page
   console.log(`First Paint: ${pw.firstPaint()}ms`)
