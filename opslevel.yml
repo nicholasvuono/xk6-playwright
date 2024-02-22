@@ -5,3 +5,6 @@ service:
   description: A fork of the go project that we use to create users for testing
   tier: tier_3
   lifecycle: maintenance
+  tags:
+  - key: type
+    value: utility
