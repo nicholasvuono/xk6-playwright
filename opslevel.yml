@@ -1,0 +1,7 @@
+version: 1
+service:
+  name: xk6-playwright
+  owner: platform
+  description: A fork of the go project that we use to create users for testing
+  tier: tier_3
+  lifecycle: maintenance
