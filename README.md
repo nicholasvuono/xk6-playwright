@@ -1,4 +1,4 @@
-> #### ⚠️ This is currently an alpha version
+> ℹ️
 >
 > This is not supported by the k6 team, and is worked on by a(n) individual contributor(s).
 > It may also break in the future as both xk6 and playwright-go evolve.
@@ -27,39 +27,39 @@ This project was inspired by <a href="https://github.com/grafana/xk6-browser" ta
 
 We totally understand at the time of writing this that xk6-browser is not yet production ready, and that it is currently an early beta that has been released to the public that will evolve and get better over time. However, we still saw validity in creating this extension aiming to support something we have used and know works to our liking. Competition is not intended, we just want to make cool things that help us do our jobs!
 
+#### Note</br>
+Although xk6-browser is still experimental it is pretty awesome and now comes bundled with k6 v0.46.0 and greater! In case this doesn't fit all your needs, go check that out!
+
 </br>
 
-## Build from source
+## Build the executable
 
 To build a `k6` binary with this extension, first ensure you have the prerequisites:
 
-- [Go toolchain](https://go101.org/article/go-toolchain.html)
-- Git
-- Clone the k6 repository (NOTE: make sure you are in the k6 repo base directory before attempting the below steps)
+- Docker
 
 Then:
 
-1. Install `xk6`:
+1. Build the binary:
   ```shell
-  go install go.k6.io/xk6/cmd/xk6@latest
-  ```
-
-2. Build the binary:
-  ```shell
-  xk6 build --output xk6-playwright --with github.com/wosp-io/xk6-playwright
+  docker run --rm -e GOOS=darwin -u "$(id -u):$(id -g)" -v "${PWD}:/xk6" \
+  grafana/xk6 build \
+  --with github.com/wosp-io/xk6-playwright
   ```
   on Windows:
   ```shell
-  xk6 build --output xk6-playwright.exe --with github.com/wosp-io/xk6-playwright
+  docker run --rm -e GOOS=windows -u "$(id -u):$(id -g)" -v "${PWD}:/xk6" `
+  grafana/xk6 build --output k6.exe `
+  --with github.com/wosp-io/xk6-playwright
   ```
-  This will create a `xk6-playwright` binary file in the current working directory. This file can be used exactly the same as the main `k6` binary, with the addition of being able to run xk6-playwright scripts.
+  This will create a `k6` binary file in the current working directory. This file can be used exactly the same as the main `k6` binary, with the addition of being able to run xk6-playwright scripts.
   
 3. For the tool to work, the browsers and OS dependencies must be installed locally. You can use the following command for this:
   ```shell
-  go run github.com/playwright-community/playwright-go/cmd/playwright@latest install --with-deps
+  go run github.com/playwright-community/playwright-go/cmd/playwright@v0.2000.1  install --with-deps
   ```
 
-4. Run scripts that import `k6/x/playwright` with the new `xk6-playwright` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./xk6-playwright run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
+4. Run scripts that import `k6/x/playwright` with the new `k6` binary. On Linux and macOS make sure this is done by referencing the file in the current directory, e.g. `./k6 run <script>`, or you can place it somewhere in your `PATH` so that it can be run from anywhere on your system.
 
 </br>
 
@@ -95,6 +95,20 @@ export default function () {
 
 </br>
 
+## Simplest Headful Example
+
+```JavaScript
+import pw from 'k6/x/playwright';
+
+export default function () {
+  pw.launch({ headless: false })
+  pw.newPage()
+  pw.goto("https://www.github.com/", { waitUntil: 'networkidle'})
+  pw.waitForSelector(".search-input", {state: 'visible'})
+  pw.kill()
+}
+```
+
 ## Monitor Real User Metrics
 
 ```JavaScript
@@ -118,6 +132,12 @@ export default function () {
 ```
 
 </br>
+
+## Examples
+
+More example can be found in the `./examples` directory
+
+<br>
 
 ## Currently Supported Actions
 
