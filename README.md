@@ -63,22 +63,6 @@ Then:
 
 </br>
 
-## Install and Run with Docker
-
-Install:
-```shell
-docker pull nickvuono/xk6-playwright
-```
-
-Run Test Script:
-```shell
-docker run --rm -i nickvuono/xk6-playwright run script.js
-```
-
-Make sure to pass headless args or options when launching, and set it to true when running tests using Docker
-
-</br>
-
 ## Simplest Working Example
 
 ```JavaScript
