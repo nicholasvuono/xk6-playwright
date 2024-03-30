@@ -49,6 +49,7 @@ Then:
   on Windows:
   ```shell
   docker run --rm -e GOOS=windows -u "$(id -u):$(id -g)" -v "${PWD}:/xk6" `
+
   grafana/xk6 build --output k6.exe `
   --with github.com/wosp-io/xk6-playwright
   ```
@@ -69,11 +70,16 @@ Then:
 import pw from 'k6/x/playwright';
 
 export default function () {
-  pw.launch()
-  pw.newPage()
-  pw.goto("https://www.google.com/", {waitUntil: 'networkidle'})
-  pw.waitForSelector("input[title='Search']", {state: 'visible'})
-  pw.kill()
+  try {
+    pw.launch();
+    pw.newPage();
+    pw.goto('https://test.k6.io/my_messages.php', { waitUntil: 'networkidle' });
+    pw.waitForSelector("input[name='login']", { state: 'visible' });
+  } catch (err) {
+    console.log(err);
+  } finally {
+    pw.kill();
+  }
 }
 ```
 
@@ -85,11 +91,16 @@ export default function () {
 import pw from 'k6/x/playwright';
 
 export default function () {
-  pw.launch({ headless: false })
-  pw.newPage()
-  pw.goto("https://www.github.com/", { waitUntil: 'networkidle'})
-  pw.waitForSelector(".search-input", {state: 'visible'})
-  pw.kill()
+  try {
+    pw.launch({ headless: false });
+    pw.newPage();
+    pw.goto('https://test.k6.io/my_messages.php', { waitUntil: 'networkidle' });
+    pw.waitForSelector("input[name='login']", { state: 'visible' });
+  } catch (err) {
+    console.log(err);
+  } finally {
+    pw.kill();
+  }
 }
 ```
 
@@ -99,19 +110,24 @@ export default function () {
 import pw from 'k6/x/playwright';
 
 export default function () {
-  pw.launch()
-  pw.newPage()
-  pw.goto("https://www.google.com/")
-  pw.waitForSelector("input[title='Search']", {state: 'visible'})
-  pw.type("input[title='Search']", "how to measure real user metrics with the xk6-playwright extension for k6?")
+  try {
+    pw.launch()
+    pw.newPage()
+    pw.goto('https://test.k6.io/my_messages.php', { waitUntil: 'networkidle' });
+    pw.waitForSelector("input[name='login']", { state: 'visible' });
+    pw.type("input[name='login']", "admin")
+    pw.sleep(500)//give a chance for the browser apis to catch up 
 
-  //print out real user metrics of the google search page
-  console.log(`First Paint: ${pw.firstPaint()}ms`)
-  console.log(`First Contentful Paint: ${pw.firstContentfulPaint()}ms`)
-  console.log(`Time to Minimally Interactive: ${pw.timeToMinimallyInteractive()}ms`)
-  console.log(`First Input Delay: ${pw.firstInputDelay()}ms`)
-
-  pw.kill()
+    //print out real user metrics of the google search page
+    console.log(`First Paint: ${pw.firstPaint()}ms`)
+    console.log(`First Contentful Paint: ${pw.firstContentfulPaint()}ms`)
+    console.log(`Time to Minimally Interactive: ${pw.timeToMinimallyInteractive()}ms`)
+    console.log(`First Input Delay: ${pw.firstInputDelay()}ms`)
+  } catch (err) {
+    console.log(err);
+  } finally {
+    pw.kill();
+  }
 }
 ```
 

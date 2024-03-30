@@ -1,7 +1,5 @@
 import pw from 'k6/x/playwright';
 
-
-
 export default function () {
   try {
     pw.launch({ headless: false });
