@@ -79,7 +79,7 @@ func TestPersistentContext(t *testing.T) {
 	pw.LaunchPersistent("./tmp/context-"+strconv.Itoa(rand.Intn(1000)), opts)
 	pw.NewPage()
 	pw.Goto("https://www.github.com", opts2)
-	pw.WaitForSelector(".search-input']", opts3)
+	pw.WaitForSelector(".search-input", opts3)
 	pw.Kill()
 }
 
