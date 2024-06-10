@@ -243,7 +243,7 @@ func (p *Playwright) FirstInputDelay() uint64 {
 		log.Fatalf("error with getting the first-input entries for first input delay metrics: %v", err)
 	}
 	entriesToString := fmt.Sprintf("%v", entries)
-	return gjson.Get(entriesToString, "0.processingStart").Uint() - gjson.Get(entriesToString, "0.startTime").Uint() //https://web.dev/fid/  for calc
+	return gjson.Get(entriesToString, "0.processingStart").Uint() - gjson.Get(entriesToString, "0.startTime").Uint() // https://web.dev/fid/  for calc
 }
 
 // Cookies wrapper around playwright cookies fetch function
